@@ -1,0 +1,202 @@
+---
+import "../styles/global.css";
+---
+
+<nav id="navbar" class="navbar">
+  <div class="nav-container">
+    <a href="#" class="logo">Mi Sitio</a>
+    <div class="menu-toggle" id="mobile-menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#about">Sobre Mí</a></li>
+      <li><a href="#proyectos">Proyectos</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </div>
+</nav>
+
+<script>
+  function handleScroll() {
+    const navbar = document.getElementById("navbar");
+    const offset = window.scrollY;
+
+    if (navbar) {
+      if (offset > 50) {
+        navbar.classList.add("scrolled");
+      } else {
+        navbar.classList.remove("scrolled");
+      }
+    }
+  }
+
+  function toggleMobileMenu() {
+    const navLinks = document.getElementById("nav-links");
+    const mobileMenu = document.getElementById("mobile-menu");
+    navLinks?.classList.toggle("active");
+    mobileMenu?.classList.toggle("active");
+  }
+
+  window.addEventListener("scroll", handleScroll);
+
+  const mobileMenuToggle = document.getElementById("mobile-menu");
+  if (mobileMenuToggle) {
+    mobileMenuToggle.addEventListener("click", toggleMobileMenu);
+  }
+
+  // Close mobile menu when a link is clicked
+  const navLinks = document.querySelectorAll(".nav-links a");
+  navLinks.forEach((link) => {
+    if (link) {
+      link.addEventListener("click", () => {
+        const navLinksElement = document.getElementById("nav-links");
+        const mobileMenuElement = document.getElementById("mobile-menu");
+        if (navLinksElement) navLinksElement.classList.remove("active");
+        if (mobileMenuElement) mobileMenuElement.classList.remove("active");
+      });
+    }
+  });
+</script>
+
+<style>
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0);
+    color: #333;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    padding: var(--espacio-m) 0;
+    container-type: inline-size;
+    container-name: navbarContainer;
+  }
+
+  .navbar.scrolled {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #000000;
+    padding: var(--espacio-s) 0;
+  }
+
+  .nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: var(--grid-max-width);
+    margin: 0 auto;
+  }
+
+  .logo {
+    font-size: var(--font-1);
+    font-weight: bold;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s ease;
+  }
+  .nav-links {
+    display: flex;
+    list-style: none;
+    gap: var(--espacio-s);
+    margin: 0;
+    padding: 0;
+    font-size: var(--font-0);
+    font-family: var(--Proxima);
+    font-weight: 600;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: inherit;
+    transition:
+      color 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .navbar.scrolled .nav-links a:hover {
+    color: #00a8ff;
+    transform: scale(1.1);
+  }
+
+  .content section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+  }
+
+  .menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background-color: #333;
+    margin: 3px 0;
+    transition: 0.4s;
+  }
+
+  @container navbarContainer (width < 1362px) {
+    .nav-container {
+      padding-inline: var(--grid-gutter);
+    }
+  }
+
+  @container navbarContainer (width < 768px) {
+    .nav-container {
+      flex-wrap: wrap;
+    }
+
+    .menu-toggle {
+      display: flex;
+      z-index: 1001;
+    }
+
+    .menu-toggle.active span:nth-child(1) {
+      transform: rotate(-45deg) translate(-5px, 6px);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+      transform: rotate(45deg) translate(-5px, -6px);
+    }
+
+    .nav-links {
+      position: fixed;
+      left: -100%;
+      top: 0;
+      flex-direction: column;
+      background-color: rgba(255, 255, 255, 0.9);
+      width: 100%;
+      text-align: center;
+      transition: 0.3s;
+      box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+      height: 100vh;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .nav-links.active {
+      left: 0;
+    }
+
+    .nav-links li {
+      margin: var(--espacio-2xs) 0;
+      font-size: var(--font-1);
+    }
+
+    .navbar.scrolled .nav-links {
+      background-color: rgba(0, 0, 0, 0.9);
+      color: #fff;
+    }
+  }
+</style>
